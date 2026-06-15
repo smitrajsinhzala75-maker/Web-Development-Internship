@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To-Do App</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg-secondary: #f5f5f3;
+      --bg-success: #eaf3de;
+      --text: #1a1a1a;
+      --text-secondary: #6b6a65;
+      --text-tertiary: #9a9994;
+      --text-success: #3b6d11;
+      --border: rgba(0,0,0,0.15);
+      --border-hover: rgba(0,0,0,0.3);
+      --border-success: #639922;
+      --radius: 8px;
+      --radius-lg: 12px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1e1e1c;
+        --bg-secondary: #2a2a28;
+        --bg-success: #173404;
+        --text: #f0ede8;
+        --text-secondary: #a8a69f;
+        --text-tertiary: #6b6a65;
+        --text-success: #97c459;
+        --border: rgba(255,255,255,0.15);
+        --border-hover: rgba(255,255,255,0.3);
+        --border-success: #639922;
+        --radius: 8px;
+        --radius-lg: 12px;
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-secondary);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .app {
+      max-width: 640px;
+      margin: 0 auto;
+      background: var(--bg);
+      border-radius: var(--radius-lg);
+      border: 0.5px solid var(--border);
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .add-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 1.5rem;
+    }
+
+    .add-bar input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 0.5px solid var(--border-hover);
+      border-radius: var(--radius);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color .15s;
+    }
+
+    .add-bar input:focus { border-color: var(--text-secondary); }
+
+    .add-bar button {
+      padding: 8px 16px;
+      border: 0.5px solid var(--border-hover);
+      border-radius: var(--radius);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background .15s;
+    }
+
+    .add-bar button:hover { background: var(--bg-secondary); }
+
+    .section { margin-bottom: 1.5rem; }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .section-title.done-title { color: var(--text-success); }
+
+    .task-card {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 6px;
+      transition: opacity .2s;
+    }
+
+    .task-card.done { opacity: .6; }
+
+    .task-check {
+      width: 20px;
+      height: 20px;
+      border: 0.5px solid var(--border-hover);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 2px;
+      background: transparent;
+      transition: background .15s, border-color .15s;
+    }
+
+    .task-check.checked {
+      background: var(--bg-success);
+      border-color: var(--border-success);
+    }
+
+    .task-check i { font-size: 12px; color: var(--text-success); }
+
+    .task-body { flex: 1; min-width: 0; }
+
+    .task-name {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .task-name.done-text {
+      text-decoration: line-through;
+      color: var(--text-tertiary);
+    }
+
+    .task-meta {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-top: 3px;
+    }
+
+    .task-actions { display: flex; gap: 4px; flex-shrink: 0; }
+
+    .task-actions button {
+      width: 28px;
+      height: 28px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      font-size: 15px;
+      transition: background .15s, color .15s;
+    }
+
+    .task-actions button:hover { background: var(--bg-secondary); color: var(--text); }
+    .task-actions button.del:hover { color: #e24b4a; }
+
+    .edit-input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: 15px;
+      color: var(--text);
+      font-family: inherit;
+      outline: none;
+      border-bottom: 1px solid var(--border-hover);
+    }
+
+    .empty {
+      font-size: 14px;
+      color: var(--text-tertiary);
+      padding: 8px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1><i class="ti ti-checklist"></i> My Tasks</h1>
+    <div class="add-bar">
+      <input type="text" id="taskInput" placeholder="Add a new task..." />
+      <button onclick="addTask()"><i class="ti ti-plus"></i> Add</button>
+    </div>
+    <div class="section">
+      <div class="section-title">Pending Tasks <span id="pendingCount"></span></div>
+      <div id="pendingList"></div>
+    </div>
+    <div class="section">
+      <div class="section-title done-title">Completed Tasks <span id="completedCount"></span></div>
+      <div id="completedList"></div>
+    </div>
+  </div>
+
+  <script>
+    let tasks = [];
+    let editId = null;
+
+    function now() {
+      return new Date().toLocaleString('en-IN', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'});
+    }
+
+    function addTask() {
+      const inp = document.getElementById('taskInput');
+      const name = inp.value.trim();
+      if (!name) return;
+      tasks.push({ id: Date.now(), name, done: false, addedAt: now(), doneAt: null });
+      inp.value = '';
+      render();
+    }
+
+    document.getElementById('taskInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') addTask();
+    });
+
+    function toggleDone(id) {
+      const t = tasks.find(t => t.id === id);
+      if (!t) return;
+      t.done = !t.done;
+      t.doneAt = t.done ? now() : null;
+      render();
+    }
+
+    function deleteTask(id) {
+      tasks = tasks.filter(t => t.id !== id);
+      render();
+    }
+
+    function startEdit(id) {
+      editId = id;
+      render();
+      const inp = document.getElementById('edit-' + id);
+      if (inp) { inp.focus(); inp.select(); }
+    }
+
+    function saveEdit(id) {
+      const inp = document.getElementById('edit-' + id);
+      if (inp) {
+        const val = inp.value.trim();
+        if (val) tasks.find(t => t.id === id).name = val;
+      }
+      editId = null;
+      render();
+    }
+
+    function cardHTML(t) {
+      const isEditing = editId === t.id;
+      const nameHTML = isEditing
+        ? `<input class="edit-input" id="edit-${t.id}" value="${t.name.replace(/"/g, '&quot;')}"
+             onblur="saveEdit(${t.id})"
+             onkeydown="if(event.key==='Enter')saveEdit(${t.id})" />`
+        : `<div class="task-name${t.done ? ' done-text' : ''}">${t.name}</div>`;
+      const meta = t.done
+        ? `<div class="task-meta"><i class="ti ti-clock" style="font-size:11px;vertical-align:-1px"></i> Added ${t.addedAt} &nbsp;·&nbsp; Done ${t.doneAt}</div>`
+        : `<div class="task-meta"><i class="ti ti-clock" style="font-size:11px;vertical-align:-1px"></i> Added ${t.addedAt}</div>`;
+      return `<div class="task-card${t.done ? ' done' : ''}">
+        <div class="task-check${t.done ? ' checked' : ''}" onclick="toggleDone(${t.id})" title="${t.done ? 'Mark pending' : 'Mark complete'}">
+          ${t.done ? '<i class="ti ti-check"></i>' : ''}
+        </div>
+        <div class="task-body">${nameHTML}${meta}</div>
+        <div class="task-actions">
+          ${!t.done ? `<button onclick="startEdit(${t.id})" title="Edit"><i class="ti ti-edit"></i></button>` : ''}
+          <button class="del" onclick="deleteTask(${t.id})" title="Delete"><i class="ti ti-trash"></i></button>
+        </div>
+      </div>`;
+    }
+
+    function render() {
+      const pending = tasks.filter(t => !t.done);
+      const done = tasks.filter(t => t.done);
+      document.getElementById('pendingCount').textContent = pending.length ? `(${pending.length})` : '';
+      document.getElementById('completedCount').textContent = done.length ? `(${done.length})` : '';
+      document.getElementById('pendingList').innerHTML = pending.length
+        ? pending.map(cardHTML).join('')
+        : '<div class="empty">No pending tasks — add one above.</div>';
+      document.getElementById('completedList').innerHTML = done.length
+        ? done.map(cardHTML).join('')
+        : '<div class="empty">No completed tasks yet.</div>';
+    }
+
+    render();
+  </script>
+</body>
+</html>

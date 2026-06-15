@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Authentication</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg-secondary: #f5f5f3;
+      --bg-danger: #fcebeb;
+      --bg-success: #eaf3de;
+      --text: #1a1a1a;
+      --text-secondary: #6b6a65;
+      --text-tertiary: #9a9994;
+      --text-danger: #a32d2d;
+      --text-success: #3b6d11;
+      --border: rgba(0,0,0,0.15);
+      --border-hover: rgba(0,0,0,0.3);
+      --radius: 8px;
+      --radius-lg: 12px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1e1e1c;
+        --bg-secondary: #2a2a28;
+        --bg-danger: #501313;
+        --bg-success: #173404;
+        --text: #f0ede8;
+        --text-secondary: #a8a69f;
+        --text-tertiary: #6b6a65;
+        --text-danger: #f09595;
+        --text-success: #97c459;
+        --border: rgba(255,255,255,0.15);
+        --border-hover: rgba(255,255,255,0.3);
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-secondary);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-sub {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .tabs {
+      display: flex;
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background .15s, color .15s;
+    }
+
+    .tab.active {
+      background: var(--bg-secondary);
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .field { margin-bottom: 1rem; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 9px 12px;
+      border: 0.5px solid var(--border-hover);
+      border-radius: var(--radius);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color .15s;
+    }
+
+    input:focus { border-color: var(--text-secondary); }
+
+    .btn {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: var(--radius);
+      background: #378add;
+      color: #fff;
+      font-size: 15px;
+      font-family: inherit;
+      cursor: pointer;
+      font-weight: 500;
+      margin-top: 0.5rem;
+      transition: opacity .15s;
+    }
+
+    .btn:hover { opacity: .88; }
+
+    .alert {
+      padding: 10px 12px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .alert.error  { background: var(--bg-danger);  color: var(--text-danger);  display: block; }
+    .alert.success{ background: var(--bg-success); color: var(--text-success); display: block; }
+
+    .secured { display: none; }
+    .secured.active { display: block; }
+
+    .welcome-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-success);
+      color: var(--text-success);
+      font-size: 13px;
+      padding: 6px 12px;
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 0.5px solid var(--border);
+      font-size: 14px;
+    }
+
+    .info-row:last-of-type { border-bottom: none; }
+    .info-label { color: var(--text-secondary); }
+    .info-value  { font-weight: 500; }
+
+    .logout-btn {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 9px;
+      border: 0.5px solid var(--border-hover);
+      border-radius: var(--radius);
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background .15s, color .15s;
+    }
+
+    .logout-btn:hover { background: var(--bg-secondary); color: var(--text); }
+
+    .divider {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin: 1rem 0 0.5rem;
+    }
+
+    .divider a { color: var(--text-secondary); }
+
+    .user-count {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .note-box {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .note-box strong { color: var(--text); display: block; margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+
+<!-- Auth card -->
+<div class="card" id="authCard">
+  <div class="card-title">&#128274; Authentication</div>
+  <div class="card-sub">Register a new account or log in to continue</div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('login')">Log in</button>
+    <button class="tab" onclick="switchTab('register')">Register</button>
+  </div>
+
+  <div id="alertBox" class="alert"></div>
+
+  <!-- Login form -->
+  <div id="loginForm">
+    <div class="field">
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" placeholder="you@example.com"/>
+    </div>
+    <div class="field">
+      <label for="loginPassword">Password</label>
+      <input type="password" id="loginPassword" placeholder="Enter your password"/>
+    </div>
+    <button class="btn" onclick="login()">Log in</button>
+    <div class="divider">Don't have an account? <a href="#" onclick="switchTab('register');return false;">Register</a></div>
+  </div>
+
+  <!-- Register form -->
+  <div id="registerForm" style="display:none">
+    <div class="field">
+      <label for="regName">Full name</label>
+      <input type="text" id="regName" placeholder="Jane Doe"/>
+    </div>
+    <div class="field">
+      <label for="regEmail">Email</label>
+      <input type="email" id="regEmail" placeholder="you@example.com"/>
+    </div>
+    <div class="field">
+      <label for="regPassword">Password <span style="color:var(--text-tertiary)">(min. 6 characters)</span></label>
+      <input type="password" id="regPassword" placeholder="Create a password"/>
+    </div>
+    <div class="field">
+      <label for="regConfirm">Confirm password</label>
+      <input type="password" id="regConfirm" placeholder="Repeat your password"/>
+    </div>
+    <button class="btn" onclick="register()">Create account</button>
+    <div class="divider">Already have an account? <a href="#" onclick="switchTab('login');return false;">Log in</a></div>
+  </div>
+
+  <div class="user-count" id="userCount"></div>
+</div>
+
+<!-- Secured page -->
+<div class="card secured" id="securedPage">
+  <div class="welcome-badge">&#10003; Authenticated</div>
+  <div class="card-title" style="margin-bottom:1rem">&#128275; Secured Page</div>
+
+  <div id="userInfo"></div>
+
+  <div class="note-box">
+    <strong>&#8505; About this page</strong>
+    This is a protected area. Only authenticated users can see this content. In a real application, this page would fetch data from a secured API endpoint using your session token.
+  </div>
+
+  <button class="logout-btn" onclick="logout()">Log out</button>
+</div>
+
+<script>
+  const USERS_KEY = 'auth_users';
+  const SESSION_KEY = 'auth_session';
+
+  function getUsers() {
+    try { return JSON.parse(localStorage.getItem(USERS_KEY)) || []; } catch { return []; }
+  }
+
+  function saveUsers(users) {
+    localStorage.setItem(USERS_KEY, JSON.stringify(users));
+  }
+
+  function showAlert(msg, type) {
+    const box = document.getElementById('alertBox');
+    box.textContent = msg;
+    box.className = 'alert ' + type;
+  }
+
+  function clearAlert() {
+    const box = document.getElementById('alertBox');
+    box.className = 'alert';
+    box.textContent = '';
+  }
+
+  function switchTab(tab) {
+    clearAlert();
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      t.classList.toggle('active', (tab === 'login' && i === 0) || (tab === 'register' && i === 1));
+    });
+    document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+    document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+    updateUserCount();
+  }
+
+  function updateUserCount() {
+    const users = getUsers();
+    const el = document.getElementById('userCount');
+    el.textContent = users.length ? users.length + ' registered account' + (users.length > 1 ? 's' : '') : '';
+  }
+
+  function register() {
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim().toLowerCase();
+    const password = document.getElementById('regPassword').value;
+    const confirm = document.getElementById('regConfirm').value;
+
+    if (!name) return showAlert('Please enter your full name.', 'error');
+    if (!email || !email.includes('@')) return showAlert('Please enter a valid email.', 'error');
+    if (password.length < 6) return showAlert('Password must be at least 6 characters.', 'error');
+    if (password !== confirm) return showAlert('Passwords do not match.', 'error');
+
+    const users = getUsers();
+    if (users.find(u => u.email === email)) return showAlert('An account with this email already exists.', 'error');
+
+    users.push({ name, email, password, createdAt: new Date().toLocaleString() });
+    saveUsers(users);
+    showAlert('Account created! You can now log in.', 'success');
+    document.getElementById('regName').value = '';
+    document.getElementById('regEmail').value = '';
+    document.getElementById('regPassword').value = '';
+    document.getElementById('regConfirm').value = '';
+    setTimeout(() => switchTab('login'), 1200);
+  }
+
+  function login() {
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const password = document.getElementById('loginPassword').value;
+
+    if (!email) return showAlert('Please enter your email.', 'error');
+    if (!password) return showAlert('Please enter your password.', 'error');
+
+    const users = getUsers();
+    const user = users.find(u => u.email === email && u.password === password);
+    if (!user) return showAlert('Invalid email or password.', 'error');
+
+    localStorage.setItem(SESSION_KEY, JSON.stringify({ name: user.name, email: user.email }));
+    showSecuredPage(user);
+  }
+
+  function showSecuredPage(user) {
+    document.getElementById('authCard').style.display = 'none';
+    document.getElementById('securedPage').classList.add('active');
+    const loginTime = new Date().toLocaleString();
+    document.getElementById('userInfo').innerHTML =
+      '<div class="info-row"><span class="info-label">Name</span><span class="info-value">' + user.name + '</span></div>' +
+      '<div class="info-row"><span class="info-label">Email</span><span class="info-value">' + user.email + '</span></div>' +
+      '<div class="info-row"><span class="info-label">Logged in at</span><span class="info-value">' + loginTime + '</span></div>';
+  }
+
+  function logout() {
+    localStorage.removeItem(SESSION_KEY);
+    document.getElementById('authCard').style.display = 'block';
+    document.getElementById('securedPage').classList.remove('active');
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginPassword').value = '';
+    clearAlert();
+    switchTab('login');
+  }
+
+  (function init() {
+    try {
+      const session = JSON.parse(localStorage.getItem(SESSION_KEY));
+      if (session && session.email) {
+        const user = getUsers().find(u => u.email === session.email);
+        if (user) { showSecuredPage(user); return; }
+      }
+    } catch {}
+    updateUserCount();
+  })();
+</script>
+</body>
+</html>
