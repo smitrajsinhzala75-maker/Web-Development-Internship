@@ -1,0 +1,468 @@
+{
+  "users": [
+    {
+      "_id": "mcqw1e5in",
+      "isVerified": false,
+      "role": "admin",
+      "createdAt": "2026-06-15T08:26:42.483Z",
+      "name": "smitrajsinh zala",
+      "email": "smitraj27@gmail.com",
+      "password": "$2a$10$Sd9nn8IvG9cUsnRF1IiK9urrQbhlDf/DplAN3yKFO/jV8YUYo4mCy",
+      "verificationToken": "038fee0f363f2e9dc975bee9e1f3bd7d29088442"
+    },
+    {
+      "_id": "dzgwsdb5o",
+      "isVerified": true,
+      "role": "customer",
+      "createdAt": "2026-06-15T08:27:23.103Z",
+      "name": "smitrajsinh zala",
+      "email": "smitraj7@gmail.com",
+      "password": "$2a$10$dmwDpEb9DiZ.4j3LtjXguOjTjuII9nQt6sYUf4f9b1XH3fXHLSUCm",
+      "verificationToken": null
+    },
+    {
+      "_id": "hmpzupvqb",
+      "isVerified": true,
+      "role": "customer",
+      "createdAt": "2026-06-15T09:48:55.870Z",
+      "name": "smitraj",
+      "email": "smitraj@gmail.com",
+      "password": "$2a$10$DgFHDZv8v5bBHB48aBzWEO5l3UeupgBJAYAxi.na75LvLUr2jX3h2",
+      "verificationToken": null
+    }
+  ],
+  "inventory": [
+    {
+      "id": "b1",
+      "name": "Thin Crust",
+      "category": "base",
+      "price": 80,
+      "stock": 50
+    },
+    {
+      "id": "b2",
+      "name": "Thick Crust",
+      "category": "base",
+      "price": 90,
+      "stock": 49,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "b3",
+      "name": "Gluten-Free",
+      "category": "base",
+      "price": 120,
+      "stock": 29,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "b4",
+      "name": "Cheese Burst",
+      "category": "base",
+      "price": 150,
+      "stock": 40
+    },
+    {
+      "id": "b5",
+      "name": "Neapolitan Crust",
+      "category": "base",
+      "price": 110,
+      "stock": 33,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "s1",
+      "name": "Classic Marinara",
+      "category": "sauce",
+      "price": 20,
+      "stock": 80
+    },
+    {
+      "id": "s2",
+      "name": "Spicy Schezwan",
+      "category": "sauce",
+      "price": 25,
+      "stock": 74,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "s3",
+      "name": "Barbecue Sauce",
+      "category": "sauce",
+      "price": 30,
+      "stock": 59,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "s4",
+      "name": "Creamy Alfredo",
+      "category": "sauce",
+      "price": 35,
+      "stock": 49,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "s5",
+      "name": "Basil Pesto",
+      "category": "sauce",
+      "price": 40,
+      "stock": 44,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "c1",
+      "name": "Mozzarella",
+      "category": "cheese",
+      "price": 50,
+      "stock": 60
+    },
+    {
+      "id": "c2",
+      "name": "Cheddar",
+      "category": "cheese",
+      "price": 60,
+      "stock": 48,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "c3",
+      "name": "Parmesan",
+      "category": "cheese",
+      "price": 70,
+      "stock": 40
+    },
+    {
+      "id": "c4",
+      "name": "Feta",
+      "category": "cheese",
+      "price": 65,
+      "stock": 30
+    },
+    {
+      "id": "c5",
+      "name": "Vegan Cheese",
+      "category": "cheese",
+      "price": 80,
+      "stock": 23,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "v1",
+      "name": "Onions",
+      "category": "veggies",
+      "price": 15,
+      "stock": 97,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "v2",
+      "name": "Tomatoes",
+      "category": "veggies",
+      "price": 15,
+      "stock": 98,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "v3",
+      "name": "Bell Peppers",
+      "category": "veggies",
+      "price": 20,
+      "stock": 89,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "v4",
+      "name": "Mushrooms",
+      "category": "veggies",
+      "price": 30,
+      "stock": 68,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "v5",
+      "name": "Black Olives",
+      "category": "veggies",
+      "price": 25,
+      "stock": 78,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "v6",
+      "name": "Jalapenos",
+      "category": "veggies",
+      "price": 25,
+      "stock": 83,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "v7",
+      "name": "Sweet Corn",
+      "category": "veggies",
+      "price": 20,
+      "stock": 92,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "m1",
+      "name": "Pepperoni",
+      "category": "meat",
+      "price": 60,
+      "stock": 40
+    },
+    {
+      "id": "m2",
+      "name": "Grilled Chicken",
+      "category": "meat",
+      "price": 50,
+      "stock": 49,
+      "$inc": {
+        "stock": -1
+      }
+    },
+    {
+      "id": "m3",
+      "name": "Italian Sausage",
+      "category": "meat",
+      "price": 55,
+      "stock": 40
+    },
+    {
+      "id": "m4",
+      "name": "Smoked Bacon",
+      "category": "meat",
+      "price": 70,
+      "stock": 29,
+      "$inc": {
+        "stock": -1
+      }
+    }
+  ],
+  "orders": [
+    {
+      "_id": "ord_tehr6ecju",
+      "status": "Order Received",
+      "paymentStatus": "paid",
+      "createdAt": "2026-06-15T08:28:34.463Z",
+      "userId": "dzgwsdb5o",
+      "userEmail": "smitraj7@gmail.com",
+      "items": [
+        {
+          "base": {
+            "name": "Gluten-Free",
+            "price": 120
+          },
+          "sauce": {
+            "name": "Creamy Alfredo",
+            "price": 35
+          },
+          "cheese": {
+            "name": "Cheddar",
+            "price": 60
+          },
+          "veggies": [
+            {
+              "name": "Onions",
+              "price": 15
+            },
+            {
+              "name": "Tomatoes",
+              "price": 15
+            },
+            {
+              "name": "Bell Peppers",
+              "price": 20
+            },
+            {
+              "name": "Mushrooms",
+              "price": 30
+            },
+            {
+              "name": "Sweet Corn",
+              "price": 20
+            }
+          ],
+          "meats": [
+            {
+              "name": "Smoked Bacon",
+              "price": 70
+            }
+          ],
+          "price": 385
+        }
+      ],
+      "totalAmount": 385,
+      "razorpayOrderId": "rp_mock_xnqd8hww5",
+      "razorpayPaymentId": "pay_mock_eywezpigh"
+    },
+    {
+      "_id": "ord_oba5cpvvy",
+      "status": "Order Received",
+      "paymentStatus": "paid",
+      "createdAt": "2026-06-15T08:29:23.126Z",
+      "userId": "dzgwsdb5o",
+      "userEmail": "smitraj7@gmail.com",
+      "items": [
+        {
+          "base": {
+            "name": "Neapolitan Crust",
+            "price": 110
+          },
+          "sauce": {
+            "name": "Basil Pesto",
+            "price": 40
+          },
+          "cheese": {
+            "name": "Vegan Cheese",
+            "price": 80
+          },
+          "veggies": [
+            {
+              "name": "Black Olives",
+              "price": 25
+            },
+            {
+              "name": "Jalapenos",
+              "price": 25
+            },
+            {
+              "name": "Sweet Corn",
+              "price": 20
+            }
+          ],
+          "meats": [],
+          "price": 300
+        }
+      ],
+      "totalAmount": 300,
+      "razorpayOrderId": "rp_mock_duc402nz8",
+      "razorpayPaymentId": "pay_mock_rot19o1yv"
+    },
+    {
+      "_id": "ord_tm5sa0ccw",
+      "status": "Order Received",
+      "paymentStatus": "paid",
+      "createdAt": "2026-06-15T09:49:41.915Z",
+      "userId": "hmpzupvqb",
+      "userEmail": "smitraj@gmail.com",
+      "items": [
+        {
+          "base": {
+            "name": "Thick Crust",
+            "price": 90
+          },
+          "sauce": {
+            "name": "Spicy Schezwan",
+            "price": 25
+          },
+          "cheese": {
+            "name": "Cheddar",
+            "price": 60
+          },
+          "veggies": [
+            {
+              "name": "Jalapenos",
+              "price": 25
+            },
+            {
+              "name": "Onions",
+              "price": 15
+            },
+            {
+              "name": "Black Olives",
+              "price": 25
+            }
+          ],
+          "meats": [
+            {
+              "name": "Grilled Chicken",
+              "price": 50
+            }
+          ],
+          "price": 290
+        }
+      ],
+      "totalAmount": 290,
+      "razorpayOrderId": "rp_mock_8lhuiqos3",
+      "razorpayPaymentId": "pay_mock_7wrzfovqg"
+    },
+    {
+      "_id": "ord_t3p357w0o",
+      "status": "Order Received",
+      "paymentStatus": "paid",
+      "createdAt": "2026-06-15T09:50:02.264Z",
+      "userId": "hmpzupvqb",
+      "userEmail": "smitraj@gmail.com",
+      "items": [
+        {
+          "base": {
+            "name": "Neapolitan Crust",
+            "price": 110
+          },
+          "sauce": {
+            "name": "Barbecue Sauce",
+            "price": 30
+          },
+          "cheese": {
+            "name": "Vegan Cheese",
+            "price": 80
+          },
+          "veggies": [
+            {
+              "name": "Sweet Corn",
+              "price": 20
+            },
+            {
+              "name": "Mushrooms",
+              "price": 30
+            },
+            {
+              "name": "Onions",
+              "price": 15
+            },
+            {
+              "name": "Tomatoes",
+              "price": 15
+            }
+          ],
+          "meats": [],
+          "price": 300
+        }
+      ],
+      "totalAmount": 300,
+      "razorpayOrderId": "rp_mock_jw7fdok4h",
+      "razorpayPaymentId": "pay_mock_j5cteru0d"
+    }
+  ]
+}
